@@ -40,62 +40,69 @@ const TodoPage: React.FC = () => {
   const { filteredTodos, remaining, hasCompleted } = useMemo(() => {
     let remaining = 0;
     let hasCompleted = false;
-  
+
     const filteredTodos = todos.filter((todo) => {
       const isCompleted = todo.completed;
-  
+
       if (!isCompleted) remaining++;
       else hasCompleted = true;
-  
+
       if (filter === TodoFilter.All) return true;
       if (filter === TodoFilter.Active) return !isCompleted;
       if (filter === TodoFilter.Completed) return isCompleted;
-  
+
       return true;
     });
-  
+
     return { filteredTodos, remaining, hasCompleted };
   }, [todos, filter]);
-  
+
   return (
     <Container className="py-4">
-      <Row className="mb-4">
-        <Col>
-          <h2>Список задач</h2>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={8} lg={6}>
+      <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+        <h2 className="h2">Список задач</h2>
+
+        <div className="mb-3" style={{ maxWidth: 600 }}>
           <TodoInput value={input} onChange={setInput} onAdd={handleAdd} />
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col md={8} lg={6}>
+        </div>
+
+        <div className="mb-3" style={{ maxWidth: 600 }}>
           <ButtonGroup className="mb-2">
             <Button
-              variant={filter === TodoFilter.All ? "secondary" : "outline-secondary"}
+              variant={
+                filter === TodoFilter.All ? "secondary" : "outline-secondary"
+              }
               onClick={() => setFilter(TodoFilter.All)}
             >
               Общий
             </Button>
             <Button
-              variant={filter === TodoFilter.Active ? "secondary" : "outline-secondary"}
+              variant={
+                filter === TodoFilter.Active ? "secondary" : "outline-secondary"
+              }
               onClick={() => setFilter(TodoFilter.Active)}
             >
               Невыполненные
             </Button>
             <Button
-              variant={filter === TodoFilter.Completed ? "secondary" : "outline-secondary"}
+              variant={
+                filter === TodoFilter.Completed
+                  ? "secondary"
+                  : "outline-secondary"
+              }
               onClick={() => setFilter(TodoFilter.Completed)}
             >
               Выполненные
             </Button>
           </ButtonGroup>
+
           <TodoList todos={filteredTodos} onToggle={handleToggle} />
-        </Col>
-      </Row>
-      <Row className="align-items-center">
-        <Col md={8} lg={6} className="d-flex justify-content-between">
+        </div>
+
+        <div
+          className="d-flex justify-content-between align-items-center"
+          style={{ maxWidth: 600 }}
+        >
           <div>
             Осталось задач: <b>{remaining}</b>
           </div>
@@ -108,8 +115,8 @@ const TodoPage: React.FC = () => {
           >
             Очистить выполненные
           </Button>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </Container>
   );
 };
